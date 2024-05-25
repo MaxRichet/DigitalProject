@@ -21,6 +21,13 @@ db.authenticate()
         console.error("Impossible de se connecter à la base de données:", err);
 });
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+//Configuration des routes
+const userRoute = require('./routes/userRoute.js');
+app.use('/users', userRoute);
+
 // Lancement du serveur
 app.listen(port, () => {
   console.log(`Exemple app listening on port ${port}`)

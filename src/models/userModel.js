@@ -21,7 +21,7 @@ const User = sequelize.define('User', {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        onUpdate: Sequelize.literal('CURRENT_TIMESTAMP')
+        onUpdate: Sequelize.literal('ON UPDATE CURRENT_TIMESTAMP')
     },
     firstname: {
         type: DataTypes.STRING,
@@ -53,17 +53,16 @@ const User = sequelize.define('User', {
     }
     }, {
       tableName: 'users',
-      timestamps: true,
-      hooks: {
-        beforeUpdate: (model, options) => {
-          model.Modified = Sequelize.literal('CURRENT_TIMESTAMP');
-        }
-    }
+      timestamps: true
 });
 
 sequelize.sync()
   .then(() => {
     console.log('Model User synchronisé avce la bdd');
+    return sequelize.query(`
+      ALTER TABLE users
+      MODIFY modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+    `);
   })
   .catch(err => {
     console.error('la synchronisation de la bdd a échoué:', err);
