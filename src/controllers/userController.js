@@ -89,6 +89,7 @@ exports.userLogin = async (req, res) => {
         if(user.email === req.body.email && comparePass) {
             const userData = {
                 id: user.id,
+                role: user.role,
                 student_id: user.student_id,
                 company_id: user.company_id
             }
