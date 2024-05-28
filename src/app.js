@@ -25,8 +25,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //Configuration des routes
+// User routes
 const userRoute = require('./routes/userRoute.js');
 app.use('/users', userRoute);
+// Job ads routes
+const jobadsRoute = require('./routes/jobadsRoute.js');
+app.use('/jobads', jobadsRoute);
 
 // Lancement du serveur
 app.listen(port, () => {
