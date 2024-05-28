@@ -86,7 +86,6 @@ exports.userLogin = async (req, res) => {
         if(!user)
             return res.status(404).json({ message: 'Aucun compte ne correspond à cet email.' });
         const comparePass = await bcrypt.compare(req.body.password, user.password);
-        console.log(comparePass);
         if(user.email === req.body.email && comparePass) {
             const userData = {
                 id: user.id,
