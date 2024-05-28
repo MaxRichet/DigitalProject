@@ -1,27 +1,11 @@
-const { Sequelize, DataTypes } = require('sequelize');
-
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST || "localhost",
-    dialect: "mysql",
-    port: process.env.DB_PORT || "8889"
-})
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database.js');
 
 const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
-    },
-    created: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    modified: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        onUpdate: Sequelize.literal('ON UPDATE CURRENT_TIMESTAMP')
     },
     firstname: {
         type: DataTypes.STRING,
@@ -50,19 +34,27 @@ const User = sequelize.define('User', {
     role: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    gender: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
     }, {
       tableName: 'users',
       timestamps: true
 });
 
+const Student = require('./studentModel.js');
+Student.hasOne(User, { foreignKey: 'student_id' });
+User.belongsTo(Student);
+
+const Company = require('./companyModel.js');
+Company.hasMany(User, { foreignKey: 'company_id' });
+User.belongsTo(Company);
+
 sequelize.sync()
   .then(() => {
-    console.log('Model User synchronisé avce la bdd');
-    return sequelize.query(`
-      ALTER TABLE users
-      MODIFY modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
-    `);
+    console.log('Model User synchronisé avec la bdd');
   })
   .catch(err => {
     console.error('la synchronisation de la bdd a échoué:', err);
