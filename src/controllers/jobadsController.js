@@ -35,10 +35,10 @@ exports.jobadsCreate = async (req, res) => {
                 const token = jwt.sign(jobadsData, process.env.JWT_KEY, { expiresIn: '10d' });
                 res.status(201).json({ message: 'Votre annonce a bien été mise en ligne.', token });
             } catch (err) {
-                res.status(500).json({message: "Erreur serveur"});
+                res.status(500).json({message: "Erreur serveur."});
             }
         } else {
-            res.status(403).json({message: 'Token manquant'});
+            res.status(403).json({message: 'Token manquant.'});
         }
     } catch (err) {
         res.status(500).json({message: "Erreur lors du traitement des données."});
@@ -81,10 +81,10 @@ exports.jobadsGet = async (req, res) => {
 
                 res.status(201).json({ jobads });
             } catch (err) {
-                res.status(500).json({message: "Erreur serveur"});
+                res.status(500).json({message: "Erreur serveur."});
             }
         } else {
-            res.status(403).json({message: 'Token manquant'});
+            res.status(403).json({message: 'Token manquant.'});
         }
     } catch (err) {
         res.status(500).json({message: "Erreur lors du traitement des données."});
@@ -138,10 +138,10 @@ exports.jobadsModify = async (req, res) => {
 
                 res.status(201).json({ message: 'Votre annonce a bien été mise à jour.' });
             } catch (err) {
-                res.status(500).json({message: "Erreur serveur"});
+                res.status(500).json({message: "Erreur serveur."});
             }
         } else {
-            res.status(403).json({message: 'Token manquant'});
+            res.status(403).json({message: 'Token manquant.'});
         }
     } catch (err) {
         res.status(500).json({message: "Erreur lors du traitement des données."});
@@ -184,10 +184,10 @@ exports.jobadsDelete = async (req, res) => {
 
                 res.status(201).json({ message: 'Votre annonce a bien été supprimé.' });
             } catch (err) {
-                res.status(500).json({message: "Erreur serveur"});
+                res.status(500).json({message: "Erreur serveur."});
             }
         } else {
-            res.status(403).json({message: 'Token manquant'});
+            res.status(403).json({message: 'Token manquant.'});
         }
     } catch (err) {
         res.status(500).json({message: "Erreur lors du traitement des données."});

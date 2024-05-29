@@ -22,7 +22,7 @@ exports.userRegister = async (req, res) => {
         let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const hashPass = await bcrypt.hash(req.body.password, saltRounds);
         if(!regex.test(req.body.email)) {
-            res.status(409).json({ message : "l'email n'a pas le bon format." })
+            res.status(409).json({ message : "L'email n'a pas le bon format." })
         }
 
         if(checkEmail == null){
@@ -32,7 +32,7 @@ exports.userRegister = async (req, res) => {
             res.status(401).json({message: "Un compte est déjà lié à cet email."});
         }
     } catch (err) {
-        res.status(500).json({ message: 'Une erreur est survenue lors de la création de votre compte. user', err });
+        res.status(500).json({ message: 'Une erreur est survenue lors de la création de votre compte.', err });
     }
 }
 
@@ -54,7 +54,7 @@ exports.companyRegister = async (req, res) => {
         }
         res.status(201).json('Votre compte a bien été créé.');
     } catch (err) {
-        res.status(500).json({ message: 'Une erreur est survenue lors de la création de votre compte. company', err });
+        res.status(500).json({ message: 'Une erreur est survenue lors de la création de votre compte.', err });
     }
 }
 
@@ -68,7 +68,7 @@ exports.studentRegister = async (req, res) => {
         });
         res.status(201).json('Votre compte a bien été créé.');
     } catch (err) {
-        res.status(500).json({ message: 'Une erreur est survenue lors de la création de votre compte. student', err });
+        res.status(500).json({ message: 'Une erreur est survenue lors de la création de votre compte.', err });
     }
 }
 
@@ -94,9 +94,9 @@ exports.userLogin = async (req, res) => {
                 company_id: user.company_id
             }
             const token = jwt.sign(userData, process.env.JWT_KEY, { expiresIn: '10d' });
-            res.status(201).json({ token });
+            res.status(201).json({ message: 'Connecté.', token });
         } else {
-            res.status(500).json({ message: 'Email ou mot de passe incorrect.' });
+            res.status(401).json({ message: 'Email ou mot de passe incorrect.' });
         }
     } catch (err) {
         res.status(500).json({ message: 'Erreur lors du traitement des données.', err });
