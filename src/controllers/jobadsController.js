@@ -182,7 +182,7 @@ exports.jobadsDelete = async (req, res) => {
                     return res.status(404).json({ message: 'Offre non trouvé.' });
                 }
 
-                res.status(201).json({ message: 'Votre annonce a bien été supprimé.' });
+                res.status(201).json({ message: 'Votre annonce a bien été supprimée.' });
             } catch (err) {
                 res.status(500).json({message: "Erreur serveur."});
             }

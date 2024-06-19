@@ -46,11 +46,11 @@ const User = sequelize.define('User', {
 
 const Student = require('./studentModel.js');
 Student.hasOne(User, { foreignKey: 'student_id' });
-User.belongsTo(Student);
+User.belongsTo(Student, { foreignKey: 'student_id' });
 
 const Company = require('./companyModel.js');
 Company.hasMany(User, { foreignKey: 'company_id' });
-User.belongsTo(Company);
+User.belongsTo(Company, { foreignKey: 'company_id' });
 
 sequelize.sync()
   .then(() => {

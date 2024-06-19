@@ -117,7 +117,13 @@ exports.userGet = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'Utilisateur introuvable.' });
         }
-        res.status(201).json(user);
+        if(user.company_id == null){
+            const student = await Student.findOne({ where: { id: req.user.student_id } });
+            res.status(201).json({user, student});
+        } else {
+            const company = await Company.findOne({ where: { id: req.user.company_id } });
+            res.status(201).json({user, company});
+        }
     } catch (err) {
         res.status(500).json({ message: 'Erreur lors du traitement des données.', err });
     }
