@@ -58,7 +58,7 @@ const Jobads = sequelize.define('Jobads', {
 
 const User = require('./userModel.js');
 User.hasMany(Jobads, { foreignKey: 'user_company_id' });
-Jobads.belongsTo(User);
+Jobads.belongsTo(User, { foreignKey: 'user_company_id' });
 
 sequelize.sync()
   .then(() => {

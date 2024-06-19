@@ -31,6 +31,9 @@ app.use('/users', userRoute);
 // Job ads routes
 const jobadsRoute = require('./routes/jobadsRoute.js');
 app.use('/jobads', jobadsRoute);
+//User applications routes
+const userappRoute = require('./routes/userappRoute.js');
+app.use('/userapp', userappRoute);
 
 // Lancement du serveur
 app.listen(port, () => {
