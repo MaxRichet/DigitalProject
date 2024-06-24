@@ -39,3 +39,5 @@ app.use('/userapp', userappRoute);
 app.listen(port, () => {
   console.log(`Exemple app listening on port ${port}`)
 });
+
+module.exports = app;

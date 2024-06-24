@@ -22,7 +22,7 @@ exports.userRegister = async (req, res) => {
         let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const hashPass = await bcrypt.hash(req.body.password, saltRounds);
         if(!regex.test(req.body.email)) {
-            res.status(409).json({ message : "L'email n'a pas le bon format." })
+            return res.status(409).json({ message : "L'email n'a pas le bon format." })
         }
 
         if(checkEmail == null){
