@@ -25,6 +25,7 @@ afterAll(async () => {
     })
 });
 
+let token = '';
 describe('All tests for user controller', () => {
   describe('POST /users/register', () => {
     it('should create a new account', async () => {
@@ -94,8 +95,8 @@ describe('All tests for user controller', () => {
             .send(testItem)
             .set('Accept', 'application/json');
 
-        console.log(res.body);
         expect(res.statusCode).toEqual(201);
+        token = res.body.token;
     });
   });
 
@@ -107,7 +108,6 @@ describe('All tests for user controller', () => {
             .send(testItem)
             .set('Accept', 'application/json');
 
-        console.log(res.body);
         expect(res.statusCode).toEqual(404);
     });
   });
@@ -120,9 +120,67 @@ describe('All tests for user controller', () => {
             .send(testItem)
             .set('Accept', 'application/json');
 
-        console.log(res.body);
         expect(res.statusCode).toEqual(401);
     });
   });
+
+  describe('GET /users/', () => {
+    it('should return his information', async () => {
+        const res = await request(app)
+            .get('/users/')
+            .set('authorization', token)
+            .set('Accept', 'application/json');
+
+        console.log(token);
+        expect(res.statusCode).toEqual(201);
+    });
+  });
+
+  describe('PUT /users/', () => {
+    it('should modify informations of an account', async () => {
+        const testItem = { firstname: "John", lastname: "Doe", email: "maxUUUU@gmail.com", password: "123456", post: "", phone: "0606060606", role: "", gender: "Homme" }
+        const res = await request(app)
+            .put('/users/')
+            .send(testItem)
+            .set('authorization', token)
+            .set('Accept', 'application/json');
+
+        console.log(token);
+        expect(res.statusCode).toEqual(201);
+        });
+    });
+
+    describe('PUT /users/ without token', () => {
+        it('should return an error', async () => {
+            const testItem = { firstname: "John", lastname: "Doe", email: "maxUUUU@gmail.com", password: "123456", post: "", phone: "0606060606", role: "", gender: "Homme" }
+            const res = await request(app)
+                .put('/users/')
+                .send(testItem)
+                .set('Accept', 'application/json');
+    
+            expect(res.statusCode).toEqual(404);
+        });
+    });
+
+    describe('DELETE /users/', () => {
+        it('should modify informations of an account', async () => {
+            const res = await request(app)
+                .delete('/users/')
+                .set('authorization', token)
+                .set('Accept', 'application/json');
+    
+            expect(res.statusCode).toEqual(201);
+        });
+    });
+
+    describe('DELETE /users/ without token', () => {
+        it('should return an error', async () => {
+            const res = await request(app)
+                .delete('/users/')
+                .set('Accept', 'application/json');
+    
+            expect(res.statusCode).toEqual(404);
+        });
+    });
 
 });

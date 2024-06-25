@@ -119,7 +119,7 @@ exports.userGet = async (req, res) => {
         }
         if(user.company_id == null){
             const student = await Student.findOne({ where: { id: req.user.student_id } });
-            res.status(201).json({user, student});
+            return res.status(201).json({user, student});
         } else {
             const company = await Company.findOne({ where: { id: req.user.company_id } });
             res.status(201).json({user, company});
